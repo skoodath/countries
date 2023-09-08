@@ -1,4 +1,5 @@
-const CountryCard = ({ country }) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const CountryCard = ({ country }: Record<string, Record<string, any>>) => {
   const currency =
     country.currencies && Object.keys(country.currencies).join(" ");
 
@@ -33,13 +34,7 @@ const CountryCard = ({ country }) => {
           <span className="font-bold">Continent:</span> {country.continents[0]}
         </p>
         <hr />
-        <p className="text-sm py-2 flex flex-row justify-between items-start">
-          <span className="font-bold">Languages:</span>{" "}
-          <ul className="text-right">
-            {languages &&
-              languages.map((language) => <li key={language}>{language}</li>)}
-          </ul>
-        </p>
+
         <hr />
         <p className="text-sm py-2 flex flex-row justify-between items-center">
           <span className="font-bold">Area:</span> {country.area}
@@ -48,6 +43,16 @@ const CountryCard = ({ country }) => {
         <p className="text-sm py-2 flex flex-row justify-between items-center">
           <span className="font-bold">Population:</span> {country.population}
         </p>
+        <hr />
+        <div className="text-sm py-2 flex flex-row justify-between items-start">
+          <span className="font-bold">Main Languages:</span>{" "}
+          <ul className="text-right">
+            {languages &&
+              languages
+                .slice(0, 4)
+                .map((language: string) => <li key={language}>{language}</li>)}
+          </ul>
+        </div>
       </div>
     </div>
   );

@@ -1,7 +1,10 @@
 import { create } from "zustand";
 
-interface CountryState {
-  countries: [];
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type Country = Record<string, Record<string, any>>;
+
+export interface CountryState {
+  countries: Country[];
   search: string;
   setCountries: (countries: []) => void;
 }
@@ -11,10 +14,6 @@ const useCountries = create<CountryState>((set) => ({
   search: "",
   setSearch: (search: string) => set({ search }),
   setCountries: (countries: []) => set({ countries }),
-  searchCountries: () =>
-    set((state) => ({
-      countries: state.countries.find((country) => country === state.search),
-    })),
 }));
 
 export default useCountries;
