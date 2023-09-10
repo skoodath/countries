@@ -1,12 +1,18 @@
+import { Country } from "../store";
+
+type CountryProps = {
+  country: Country;
+};
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const CountryCard = ({ country }: Record<string, Record<string, any>>) => {
+const CountryCard = ({ country }: CountryProps) => {
   const currency =
     country.currencies && Object.keys(country.currencies).join(" ");
 
   const languages = country.languages && Object.values(country.languages);
 
   return (
-    <div className="flex flex-col border-2 rounded-sm m-2 justify-start p-3 w-80">
+    <div className="flex flex-col border-2 rounded-sm my-2 mx-0 justify-start p-3 w-80">
       <h3 className="text-1xl uppercase text-left border-b-2 p-1 font-semibold flex justify-between items-start">
         <span className="text-1xl">{country.name.common}</span>{" "}
         <span className="text-2xl">{country.flag}</span>
@@ -31,7 +37,7 @@ const CountryCard = ({ country }: Record<string, Record<string, any>>) => {
         </p>
         <hr />
         <p className="text-sm py-2 flex flex-row justify-between items-center">
-          <span className="font-bold">Continent:</span> {country.continents[0]}
+          <span className="font-bold">Continent:</span> {country.continents}
         </p>
         <hr />
 
