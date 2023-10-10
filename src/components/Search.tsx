@@ -10,7 +10,7 @@ const Search = () => {
     setSearch(e.target.value);
   };
   return (
-    <div className="flex-1">
+    <div className="flex-1 basis-2/4 order-1 lg:order-2">
       <input
         type="text"
         value={search}

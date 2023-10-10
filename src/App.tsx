@@ -1,12 +1,44 @@
 import { useQuery } from "@tanstack/react-query";
 import useCountries, { Country } from "./store";
-
 import HomeContent from "./components/HomeContent";
+import Header from "./components/Header";
+import SearchSortFilter from "./components/SearchSortFilter";
+import { useEffect, useMemo, useRef, useState } from "react";
+import FilteredResults from "./components/FilteredResults";
 
 function App() {
+  const [openFilter, setOpenFilter] = useState(false);
+  const [openSubFilter, setOpenSubFilter] = useState(false);
+  const setCountries = useCountries((state) => state.setCountries);
   const countries = useCountries((state) => state.countries);
   const search = useCountries((state) => state.search);
-  const setCountries = useCountries((state) => state.setCountries);
+  const [filter, setFilter] = useState("");
+  const filterChildRef = useRef<HTMLDivElement>(null);
+
+  const filteredCountries =
+    filter === ""
+      ? countries
+      : countries.filter((country) => country.continents[0] === filter);
+
+  const totalCountries = useMemo(() => {
+    return filteredCountries?.length;
+  }, [filteredCountries]);
+
+  useEffect(() => {
+    const closeMenuHandler = () => {
+      if (
+        openFilter &&
+        filterChildRef.current &&
+        !filterChildRef.current.contains(event?.target as HTMLDivElement)
+      ) {
+        setOpenFilter(false);
+        setOpenSubFilter(false);
+      }
+    };
+    document.addEventListener("click", closeMenuHandler);
+    return () => document.removeEventListener("click", closeMenuHandler);
+  }, [openFilter]);
+
   const header = "Countries of the world";
 
   const fetchCountries = async (): Promise<Country[]> => {
@@ -35,14 +67,28 @@ function App() {
         .sort((a, b) => a.name.common.localeCompare(b.name.common));
     setCountries(sortedCountries);
   };
+  const handleFilterCountries = (value: string) => {
+    setFilter(value);
+  };
 
   return (
-    <div className="flex flex-col w-screen h-screen items-center">
-      <HomeContent
-        header={header}
-        countries={countries}
+    <div className="flex flex-col w-9/12 h-screen mx-auto">
+      <Header header={header} />
+      <SearchSortFilter
         onSort={handleCountrySort}
+        onFilter={handleFilterCountries}
+        openFilter={openFilter}
+        openSubFilter={openSubFilter}
+        setOpenFilter={setOpenFilter}
+        setOpenSubFilter={setOpenSubFilter}
+        ref={filterChildRef}
       />
+      <FilteredResults
+        continentFilter={filter}
+        totalCountries={totalCountries}
+      />
+      <hr className="my-6" />
+      <HomeContent countries={countries} filter={filter} />
     </div>
   );
 }
