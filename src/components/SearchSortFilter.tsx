@@ -28,7 +28,7 @@ const SearchSortFilter = forwardRef<HTMLDivElement, SearchSortFilterProps>(
     ref
   ) => {
     return (
-      <div className="flex flex-col lg:flex-row gap-2 relative px-0 lg:px-16">
+      <div className="flex flex-col lg:flex-row gap-2 sticky top-0 px-0 md:px-40 py-4 bg-slate-50">
         <div className="flex basis-1/3 gap-2 order-2 lg:order-1">
           <button
             onClick={onSort}

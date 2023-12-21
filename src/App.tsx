@@ -72,7 +72,7 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col w-9/12 h-screen mx-auto">
+    <>
       <Header header={header} />
       <SearchSortFilter
         onSort={handleCountrySort}
@@ -87,9 +87,11 @@ function App() {
         continentFilter={filter}
         totalCountries={totalCountries}
       />
-      <hr className="my-6" />
-      <HomeContent countries={countries} filter={filter} />
-    </div>
+      <div className="flex flex-col w-full md:w-9/12 mx-auto px-4 py-8">
+        <hr className="my-6" />
+        <HomeContent countries={countries} filter={filter} />
+      </div>
+    </>
   );
 }
 

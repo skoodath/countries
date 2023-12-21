@@ -23,7 +23,7 @@ const HomeContent = ({ countries, filter }: HomeContentProps) => {
 
   return (
     <div className="mx-auto">
-      <div className="flex flex-wrap space-x-4 justify-center mt-4">
+      <div className="flex flex-wrap gap-4 justify-center mt-4 flex-col md:flex-row">
         {countries &&
           filteredCountries.map((country) => (
             <CountryCard key={country.name.common} country={country} />
